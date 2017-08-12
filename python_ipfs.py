@@ -29,3 +29,9 @@ if sys.argv[2] == 'uploadHash':
                 exit()
     except Exception as e:
         print('Error %s occured' % e)
+elif sys.argv[2] == 'getFileById' or sys.argv[2] == 'getFileByHash':
+    try:
+        if sys.argv[2] == 'getFileById':
+            transaction = eth_node.call_with_transaction(eth_node.coinbase(), contract_address, 'getFileById(%s)' % identifier)
+        else:
+            transaction = eth_node.call_with_transaction(eth_node.coinbase(), contract_address, 'getFileByHash(%s)' % hash_id)

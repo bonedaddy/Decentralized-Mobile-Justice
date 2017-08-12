@@ -15,14 +15,11 @@ contract ipfsControls {
         PublishHash
     }
 
-    function getHash(string _dataName) constant returns (bytes32) {
+    function getFile(string _dataName) constant returns (bytes32) {
         return ipfsEntries[_dataName];
     }
 
-    function getFile(string _dataName) constant returns {
-
-    }    
-
+ 
 }
 
 contract SecurityControls {
