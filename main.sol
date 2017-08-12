@@ -8,8 +8,8 @@ contract ipfsControls {
     mapping (string => bytes32) public ipfsEntries;    
 
     // this sets a particular hash on the blockchain, bound to a mapping.
-    function setHash(string _dataName, bytes32 _data) {
-        ipfsEntries[_dataName] = _data;
+    function setHash(string _identifier, bytes32 _ipfsHash) {
+        ipfsEntries[_identifier] = _ipfsHash;
     }
 
     function getHash(string _dataName) constant returns (bytes32) {
@@ -38,5 +38,14 @@ contract SecurityControls {
 
 contract PoliceEnforcement is ipfsControls, SecurityControls {
 
+    address public privilegedAccount;
 
+    function PoliceEnforcement() {
+        privilegedAccount = msg.sender; // temporary
+    }
+
+    function publishVideo(string _identifier, bytes32 _ipfsHash) returns (bool success) {
+        setHash(_identifier,sha3(_ipfsHash,block.timestamp));
+        return true;
+    } 
 }
