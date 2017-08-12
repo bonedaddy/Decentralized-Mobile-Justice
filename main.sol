@@ -7,14 +7,21 @@ contract ipfsControls {
 
     mapping (string => bytes32) public ipfsEntries;    
 
+    event PublishHash(string indexed identifier, bytes32 indexed shaIpfsHash);
+
     // this sets a particular hash on the blockchain, bound to a mapping.
-    function setHash(string _identifier, bytes32 _ipfsHash) {
+    function uploadHash(string _identifier, bytes32 _ipfsHash) {
         ipfsEntries[_identifier] = _ipfsHash;
+        PublishHash
     }
 
     function getHash(string _dataName) constant returns (bytes32) {
         return ipfsEntries[_dataName];
     }
+
+    function getFile(string _dataName) constant returns {
+
+    }    
 
 }
 
@@ -45,7 +52,7 @@ contract PoliceEnforcement is ipfsControls, SecurityControls {
     }
 
     function publishVideo(string _identifier, bytes32 _ipfsHash) returns (bool success) {
-        setHash(_identifier,sha3(_ipfsHash,block.timestamp));
+        uploadHash(_identifier,sha3(_ipfsHash,block.timestamp));
         return true;
     } 
 }
