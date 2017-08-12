@@ -18,8 +18,25 @@ contract ipfsControls {
 
 }
 
+contract SecurityControls {
 
-contract PoliceEnforcement {
+    address public owner;
 
-    
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    } 
+    function SecurityControls() {
+        owner = msg.sender;
+    }
+
+    function transferOwnership(address _newOwner) public onlyOwner returns (bool success) {
+        owner = _newOwner;
+        return true;
+    }
+}
+
+contract PoliceEnforcement is ipfsControls, SecurityControls {
+
+
 }
