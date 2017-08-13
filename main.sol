@@ -1,18 +1,29 @@
 pragma solidity ^0.4.14;
 
 contract ipfsControls {
-     // used to generate, and store, the hash on the blockchain and also store the file on the ipfs node
-     // also used for returning the  ipfs hash
-    bytes storedData;
 
-    mapping (string => bytes32) public ipfsEntries;    
+    // used to track that an entry was made
+    mapping (string => mapping (bytes32 => bool)) ipfsEntryTracker;    
+    mapping (string => bytes32) ipfsEntries;
 
     event PublishHash(string indexed identifier, bytes32 indexed shaIpfsHash);
 
-    // this sets a particular hash on the blockchain, bound to a mapping.
-    function uploadHash(string _identifier, bytes32 _ipfsHash) {
+    modifier onlyOnce(string _identifier, bytes32 _ipfsHash) {
+        require(!ipfsEntryTracker[_identifier][_ipfsHash]);
+        _;
+    }
+
+    function updateMappings(string _identifier, bytes32 _ipfsHash) internal {
+        assert(!ipfsEntryTracker[_identifier][_ipfsHash]);
+        ipfsEntryTracker[_identifier][_ipfsHash] = true;
         ipfsEntries[_identifier] = _ipfsHash;
-        PublishHash
+    }
+    // this sets a particular hash on the blockchain, bound to a mapping.
+    function uploadHash(string _identifier, bytes32 _ipfsHash) public {
+        updateMappings(_identifier, _ipfsHash);
+        if(!ipfsEntryTracker[_identifier][_ipfsHash]) {
+            revert();
+        }
     }
 
     function getFile(string _dataName) constant returns (bytes32) {
