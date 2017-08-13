@@ -4,9 +4,12 @@ import ipfsapi, ethjsonrpc, sys
 def help():
     print('Proper invocation: python_ipfs.py <file-source> <upload-identifier> <function-execute')
     print('EX: python_ipfs.py test.txt "test file" uploadHash')
+
 if len(sys.argv) < 3:
+    help()
     exit()
 elif len(sys.argv) > 3:
+    help()
     exit()
 else:
     print('Correct number of arguments')

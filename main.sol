@@ -1,11 +1,15 @@
 pragma solidity ^0.4.14;
 
-contract ipfsControls {
+contract IpfsControls {
+
+    struct IpfsEntries {
+        string ipfsHash;
+    }
+
 
     // used to track that an entry was made
-    mapping (string => mapping (bytes32 => bool)) ipfsEntryTracker;    
-    mapping (string => bytes32) ipfsEntries;
-
+    mapping (uint => IpfsEntries) public ipfsEntryTracker;
+    
     event PublishHash(string indexed identifier, bytes32 indexed shaIpfsHash);
 
     modifier onlyOnce(string _identifier, bytes32 _ipfsHash) {
@@ -13,10 +17,13 @@ contract ipfsControls {
         _;
     }
 
-    function updateMappings(string _identifier, bytes32 _ipfsHash) internal {
-        assert(!ipfsEntryTracker[_identifier][_ipfsHash]);
-        ipfsEntryTracker[_identifier][_ipfsHash] = true;
-        ipfsEntries[_identifier] = _ipfsHash;
+    function IpfsControls() {
+        // constructor, claled during function init
+        // points to a readme file
+        ipfsEntryTracker[0] = IpfsEntries("QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH");
+    }
+
+    function updateMappings( bytes32 _ipfsHash) internal {
     }
     // this sets a particular hash on the blockchain, bound to a mapping.
     function uploadHash(string _identifier, bytes32 _ipfsHash) public {
