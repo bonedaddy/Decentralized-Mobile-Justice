@@ -7,13 +7,16 @@ contract IpfsControls {
     }
 
 
+    uint256 numEntries;
+
     // used to track that an entry was made
     mapping (uint => IpfsEntries) public ipfsEntryTracker;
-    
+    mapping (uint8 => bool) public ipfsEntered;    
     event PublishHash(string indexed identifier, bytes32 indexed shaIpfsHash);
 
-    modifier onlyOnce(string _identifier, bytes32 _ipfsHash) {
-        require(!ipfsEntryTracker[_identifier][_ipfsHash]);
+    modifier onlyOnce(bytes32 _ipfsHash) {
+        // need a way to keep 
+        require(!ipfsEntered[0][_ipfsHash]);
         _;
     }
 
@@ -21,9 +24,12 @@ contract IpfsControls {
         // constructor, claled during function init
         // points to a readme file
         ipfsEntryTracker[0] = IpfsEntries("QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH");
+        ipfsEntered[0] = true;
     }
 
-    function updateMappings( bytes32 _ipfsHash) internal {
+    function updateMappings( bytes32 _ipfsHash) onlyOnce internal {
+        numEntries = SafeMath(numEntries, 1); // need to implement safe math
+        ipfsEntryTracker[numEntries] = IpfsEntries(_ipfsHash);
     }
     // this sets a particular hash on the blockchain, bound to a mapping.
     function uploadHash(string _identifier, bytes32 _ipfsHash) public {
