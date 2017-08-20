@@ -20,22 +20,10 @@ contract Owner {
 }
 contract DataReceive is Owner {
 
-
-
-
-    // used to keep track of entries. Each IPFS hash when entered is set to true
-    // This is used so that once an ipfsHash has been entered it can't be changed 
-    mapping (string => bool) public ipfsHashEntered;
-
-    // tracks number of contributions for a given identity
-    mapping (address => uint256) public contributionTracker;
-
-    // used to check if a user has uploaded before
-    mapping (address => bool) public hasUploaded;
-
     struct Entry {
-        uint256 id;
-        string hash;
+        uint256 id; // entry number
+        string ipfsHash; // name of ipfs hash
+        string ipfsChecksum; // name of checksum
     }
 
     // testing struct to track user entries
@@ -47,23 +35,39 @@ contract DataReceive is Owner {
         // each time  a user makes an upload, the key gets upped by 1, with a new value of the ipfs hash
         mapping (uint256 => Entry) contributions;
     }
+
     // Used to keep trtack of  each uploader, how many videos they uploded, how many credits, etc...
     mapping (address => Uploaders) public uploaderTracker;
     
+    // used to keep track of entries. Each IPFS hash when entered is set to true
+    // This is used so that once an ipfsHash has been entered it can't be changed 
+    mapping (string => bool) public ipfsHashEntered;
+
+    // used to check if a user has uploaded before
+    mapping (address => bool) public hasUploaded;
     // this function can only be called by the contract when a user hasn't uploaded before
-    function initializeFirstEntry() private {
-        
+    function initializeFirstEntry(address _recorder) private {
+        // creates a brand new struct and saves it to storage.
+        uploaderTracker[_recorder] = Uploaders(_recorder, 0, 0);
     }
 
     function addEntry(address _recorder, string _ipfsHash, string _ipfsChecksum) external {
-        if(!hasUploaded) {
+        if(!hasUploaded[_recorder]) {
             initializeFirstEntry(_recorder);
         }
+        // checks to see that this particular ipfs hash hasn't been uploaded before
         require(!ipfsHashEntered[_ipfsHash]);
+        // makes sure the person calling the function isn't the recorder
         require(_recorder != msg.sender);
-        contributionTracker[_recorder] += 1;        
-        ipfsTracker[_ipfsHash] = _ipfsChecksum;
-        ipfsHashEntered[_ipfsHash] = true;
+        Uploaders storage u = uploaderTracker[_recorder];
+        u.numContributions += 1;
+        u.credits += 22222; // arbitrary for now
+        // updates the `contributions` mapping which points to a struct
+        u.contributions = Entry({id: u.numContributions, ipfsHash: _ipfsHash, ipfsChecksum: _ipfsChecksum});
+        if(!hasUploaded[_recorder]) {
+            hasUploaded[_recorder] = true;
+        }
+        // Notifies blockchain that data was sotred
         DataEntry(_recorder, _ipfsHash, _ipfsChecksum);
     }
 
