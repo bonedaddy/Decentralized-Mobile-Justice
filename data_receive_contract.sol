@@ -45,6 +45,10 @@ contract DataReceive is Owner {
 
     // used to check if a user has uploaded before
     mapping (address => bool) public hasUploaded;
+  
+    // Event to log data entry
+    event DataEntry(address indexed _recorder, string indexed _ipfsHash, string indexed _ipfsChecksum);
+  
     // this function can only be called by the contract when a user hasn't uploaded before
     function initializeFirstEntry(address _recorder) private {
         // creates a brand new struct and saves it to storage.
@@ -71,11 +75,12 @@ contract DataReceive is Owner {
         DataEntry(_recorder, _ipfsHash, _ipfsChecksum);
     }
 
-
-    // Event to log data entry
-    event DataEntry(address indexed _recorder, string indexed _ipfsHash, string indexed _ipfsChecksum);
-
     function DataReceive(string _ipfsHash, string _ipfsChecksum) {
+        uploaderTracker[msg.sender] = Uploaders(msg.sender,0, 0);
+        Uploaders storage u = uploaderTracker[msg.sender];
+        u.numContributions += 1;
+        u.credits = 0;
+        u.contributions = Entry({id: u.numContributions, ipfsHash: _ipfsHash, ipfsChecksum: _ipfsChecksum});
         ipfsTracker[_ipfsHash] = _ipfsChecksum;
         ipfsHashEntered[_ipfsHash] = true;
     }
@@ -84,17 +89,6 @@ contract DataReceive is Owner {
         return ipfsTracker[_ipfsHash];
     }
 
-    function getIpfsHash()
-    function getContributionCount(address _person) constant returns (uint256 _amount) {
-        if(contributionTracker[_person] <= 0) {
-            return 0;
-        } else {
-            return contributionTracker[_person];    
-        }
-    }
-
-
- 
     function verifiyDataIntegrity() constant returns (bool success) {
         return true;
     }
