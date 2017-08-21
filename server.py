@@ -28,8 +28,31 @@ class Web3():
 
     
 
-    def addEntry(recorder, videoObject):
-        response = ipfs.add(videoObject)
-        ipfshash = ipfs.cat(response['Hash']).strip('\n')
-        ipfshash_checksum = self.hasher.update(b'%s' % ipfshash)
-        self.w3_contract.transact().addEntry(str(recorder), str(ipfshash), str(ipfshash_checksum))
+    def addChecksum(recorder, ipfshash):
+        checksum = self.hasher.update(b'%s' % ipfshash)
+        self.w3_contract.transact().addEntry(str(recorder), str(ipfshash), str(checksum))
+
+
+class Ipfs():
+
+    def __init__(ip, port):
+        self.ipfs_api = ipfsapi.connect(ip, port)
+
+    
+    def uploadFile(objectID):
+        response = self.ipfs_api.add(objectID)
+        ipfshash = self.ipfs_api.cat(response['Hash']).strip('\n')
+        return ipfshash
+
+
+
+
+
+def init():
+    webb3 = Web3('someaddr')
+    ipfss = Ipfs('ip', 'port')
+
+
+def storeToIpfsAndSaveChecksum(recorder, ipfshash):
+    ipfshash = ipfss.uploadFile('some id')
+    webb3.addChecksum(recorder, ipfshash)
