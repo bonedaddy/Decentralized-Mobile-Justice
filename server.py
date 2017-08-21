@@ -48,11 +48,20 @@ class Ipfs():
 
 
 
-def init():
-    webb3 = Web3('someaddr')
-    ipfss = Ipfs('ip', 'port')
+def init(str: tokenContractAddress, str: ipfsNodeIp, int: ipfsNodePort):
+    webb3 = Web3(tokenContractAddress)
+    ipfss = Ipfs(ipfsNodeIp, ipfsNodePort)
+    return webb3, ipfss
 
 
-def storeToIpfsAndSaveChecksum(recorder, ipfshash):
+def storeToIpfsAndSaveChecksum():
     ipfshash = ipfss.uploadFile('some id')
     webb3.addChecksum(recorder, ipfshash)
+
+
+
+runCounter = 0
+while True:
+    if runCounter == 0:
+        webb3, ipfss = init('address', '127.0.0.1', 5001)
+        runCounter += 1
