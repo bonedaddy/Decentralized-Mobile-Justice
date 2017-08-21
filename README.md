@@ -4,7 +4,17 @@ Several years ago there was a project done along with ACLU (around the time of t
 
 It will feature a token which will be used as an incentive system for uploading videos, and for running a not yet constructed **citadel** server whiich will maintain a local backup of every video uploaded. 
 
-# Files
+# Project Road MAp
+
+As of this moment, there is no set roadmap with specific dates. However this is an open-source, and volunteer based project where anyone is allowed to contribute. Once there is a fully working prototype, I will be crowdfunding this project so that I can hire developers so we can churn out a production ready product. Everyone who was part of the project during the initial (current) development phase, will be offered a paid development position, with pay equivalent to the work done
+
+# Volunteers Needed For
+
+* NodeJS server which will act as a "citadel" server which maintains a local copy of every file uploaded this server. Integrate with Ethereum so that people running Citadel servers will be credited with a token.
+* NodeJS servers that optimally can be browserified so that it can be run off a single HTML page. This server will accept incoming video streams, saving the video to IPFS, and then calling a smart contract to upload the checksum/integrity check to immutable storage
+* Mobile application that will stream video to a randomly select NodeJS server, and once done recording saves video locally. Must also integrate with ethereum, as users will be identified by eth addresses, and will be given a token to act as an incentive for vdieo recording
+* Website design for both the project website, and html pages people will be using
+* NOTE: I (postables) will be handling all smart contract development
 
 ## data_receive_contract.sol
 
