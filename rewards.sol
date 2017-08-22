@@ -46,10 +46,17 @@ contract SafeMath {
 
 contract Rewards is SafeMath, Owner {
 
+    address public founder;
+
     // used to track credits
     mapping (address => uint256) public balances;
 
     function Rewards() {
+        founder = msg.sender;
+        balances[founder] = 1; // temporary
+    }
+
+    function calcRewardStreamer(address _recorder) returns (bool success) {
         return true;
     }
 }
