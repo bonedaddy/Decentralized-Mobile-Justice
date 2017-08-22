@@ -10,8 +10,7 @@ As of this moment, there is no set roadmap with specific dates. However this is 
 
 # Volunteers Needed For
 
-* NodeJS server which will act as a "citadel" server which maintains a local copy of every file uploaded this server. Integrate with Ethereum so that people running Citadel servers will be credited with a token.
-* NodeJS servers that optimally can be browserified so that it can be run off a single HTML page. This server will accept incoming video streams, saving the video to IPFS, and then calling a smart contract to upload the checksum/integrity check to immutable storage
+* livepeer code modification (Go developer)
 * Mobile application that will stream video to a randomly select NodeJS server, and once done recording saves video locally. Must also integrate with ethereum, as users will be identified by eth addresses, and will be given a token to act as an incentive for vdieo recording
 * Website design for both the project website, and html pages people will be using
 * NOTE: I (postables) will be handling all smart contract development
