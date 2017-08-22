@@ -1,24 +1,5 @@
 pragma solidity ^0.4.11;
 
-contract CopCoin {
-    address public owner;
-
-    uint256 public supply;
-
-    mapping (address => uint256) public balances;
-
-    event Transfer(address indexed _from, address indexed _to, uint256 _value);
-
-    function CopCoin() {
-        balances[msg.sender] = supply;
-        owner = msg.sender;
-    }
-    function transfer(address _to, uint256 _amount) external {
-        balances[msg.sender] -= _amount;
-        balances[_to] += _amount;
-        Transfer(msg.sender, _to, _amount);
-    }
-}
 contract Owner {
     
     address public owner;
@@ -63,26 +44,13 @@ contract SafeMath {
   }
 }
 
-contract Rewards  is Owner, SafeMath {
-
-
-    address public tokenContract;
-    // amount of credits a user is given for an upload
-    uint256 public uploadRewardRate;
-    function Rewards(address _tokenContract) {
-        tokenContract = _tokenContract;
-    }
-}
-
 
 contract DataReceive is Owner, SafeMath {
 
     
     address public tokenContractAddress;
-    CopCoin public coinTransfer;
 
     struct Entry {
-        uint256 id; // entry number
         string ipfsHash; // name of ipfs hash
         string ipfsChecksum; // name of checksum
     }
@@ -94,7 +62,8 @@ contract DataReceive is Owner, SafeMath {
         // unused for now, will be used to track credits;
         uint256 credits;
         // each time  a user makes an upload, the key gets upped by 1, with a new value of the ipfs hash
-        mapping (uint256 => Entry) contributions;
+        bytes32[] ipfsHashes;
+        bytes32[] ipfsChecksum;
     }
 
     // Used to keep trtack of  each uploader, how many videos they uploded, how many credits, etc...
@@ -110,43 +79,39 @@ contract DataReceive is Owner, SafeMath {
     // tracks credits of user 
     mapping (address => uint256) public creditBalances;
 
+    // mapping used to track checksum to ipfshash
+    mapping (string => string) public ipfshashToChecksum;
+
     // Event to log data entry
     event DataEntry(address indexed _recorder, string indexed _ipfsHash, string indexed _ipfsChecksum);
   
     // Logs a token transfer
     event CreditTransfer(address indexed _this, address indexed _to, uint256 _amount);
     // this function can only be called by the contract when a user hasn't uploaded before
-    function initializeFirstEntry(address _recorder) private {
-        // creates a brand new struct and saves it to storage.
-        uploaderTracker[_recorder] = Uploaders(_recorder, 0, 0);
-    }
 
-    function safeWithdraw(uint256 _amount) external {
-        assert(creditBalances[msg.sender] > _amount);
-        uint256 totalBalance = creditBalances[msg.sender];
-        uint256 remainingAmount = sub(totalBalance, _amount);
-        creditBalances[msg.sender] = remainingAmount;
-        creditBalances[this] = sub(creditBalances[this], creditBalances[msg.sender]);
-        if(!coinTransfer.transfer(msg.sender, _amount)) {
-            // send failed, so we reset state changes
-            revert();
-        } else {
-            CreditTransfer(this, msg.sender, _amount);
-        }
+    function registerRecorder(address _recorder) private {
+        Uploaders memory t;
+        t.person = _recorder;
+        t.numContributions = 0;
+        t.credits = 0;
+        uploaderTracker[_recorder] = t;
     }
-    function addEntry(address _recorder, string _ipfsHash, string _ipfsChecksum) external {
-        if(!hasUploaded[_recorder]) {
-            initializeFirstEntry(_recorder);
+    function addEntry(address _recorder, string _ipfsHash) external {
+        if(hasUploaded[_recorder]) {
+           revert();
+        } else {
+            // user has n ever uploaded so lets register
+            registerRecorder(_recorder);
         }
         // checks to see that this particular ipfs hash hasn't been uploaded before
         require(!ipfsHashEntered[_ipfsHash]);
         // makes sure the person calling the function isn't the recorder
         require(_recorder != msg.sender);
-        Uploaders storage u = uploaderTracker[_recorder];
-        u.numContributions += 1;
-        u.credits += 22222; // arbitrary for now
+        uploaderTracker[_recorder].numContributions += 1; 
+        uploaderTracker[_recorder].credits += 1; 
         // updates the `contributions` mapping which points to a struct
-        u.contributions = Entry({id: u.numContributions, ipfsHash: _ipfsHash, ipfsChecksum: _ipfsChecksum});
+        uploaderTracker[_recorder].ipfsHashes.push(sha3(_ipfsHash)); 
+        uploaderTracker[_recorder].ipfsHashes.push(sha3(_ipfsHash)); 
         if(!hasUploaded[_recorder]) {
             hasUploaded[_recorder] = true;
         }
@@ -154,19 +119,19 @@ contract DataReceive is Owner, SafeMath {
         DataEntry(_recorder, _ipfsHash, _ipfsChecksum);
     }
 
-    function DataReceive(string _ipfsHash, string _ipfsChecksum, address _tokenContractAddress) {
-        coinTransfer = CopCoin(_tokenContractAddress);
+    function DataReceive(string _ipfsHash, address _tokenContractAddress) {
         uploaderTracker[msg.sender] = Uploaders(msg.sender,0, 0);
         Uploaders storage u = uploaderTracker[msg.sender];
         u.numContributions += 1;
         u.credits = 0;
-        u.contributions = Entry({id: u.numContributions, ipfsHash: _ipfsHash, ipfsChecksum: _ipfsChecksum});
+        string ipfsChecksum = sha3(_ipfsHash); // we do checksum generation on chain
+        u.contributions = Entry({id: u.numContributions, ipfsHash: _ipfsHash, ipfsChecksum: ipfsChecksum});
         ipfsHashEntered[_ipfsHash] = true;
         creditBalances[msg.sender] = 1; // temporary
     }
 
     function getIpfsHashChecksum(string _ipfsHash) constant returns (string _checksum) {
-        return ipfsTracker[_ipfsHash];
+        return ipfshashToChecksum[_ipfsHash];
     }
 
     function verifiyDataIntegrity() constant returns (bool success) {
