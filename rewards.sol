@@ -47,15 +47,28 @@ contract SafeMath {
 contract Rewards is SafeMath, Owner {
 
     address public founder;
-
+    address public tokenContractAddress;
+    bool public rewardsFrozen;
     // used to track credits
     mapping (address => uint256) public balances;
 
-    function Rewards() {
+    // notify network of unfreeze
+    event InitRewards(bool indexed enabled);
+
+    function Rewards(address _tokenContractAddress) {
         founder = msg.sender;
-        balances[founder] = 1; // temporary
+        tokenContractAddress = _tokenContractAddress;
+        rewardsFrozen = true;
     }
 
+    function initializeRewardSystem(uint256 _tokenAmount) onlyOwner {
+        // requires tokens sent to this contract first
+        balances[owner] = _tokenAmount;
+        rewardsFrozen = false;
+        InitRewards(true);
+    }
+
+    }
     function calcRewardStreamer(address _recorder) returns (bool success) {
         return true;
     }
