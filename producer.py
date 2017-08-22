@@ -36,7 +36,7 @@ def videoSender(video):
 
         # clear video capture
         video.release()
-
+        print('closing stream')
 
 
 
