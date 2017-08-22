@@ -16,6 +16,15 @@ As of this moment, there is no set roadmap with specific dates. However this is 
 * Website design for both the project website, and html pages people will be using
 * NOTE: I (postables) will be handling all smart contract development
 
+# Donations
+Should you wish to donate to this project and help development please send cryptos to any of the following addresses:
+### NEO: AGE9A4aDkk3BgZ7vmkhCshvg1JW8WT2rrY
+### SIGT: BRSvsHH8jS9K2ECtdVX5MMZfSAU1iasYNk
+### ETH: 0x846fc33b1e82727dc792796cc9ee0a1a086a8630
+### BTC: 15EmsVHRUcxDKd8jdY9DpKLAhvBtKf5SB6
+
+All donation's will be split amongst active-contributor/stakeholders
+
 ## data_receive_contract.sol
 
 This is the contract that is used to store IPFS hash, checksum, and recorder information.
