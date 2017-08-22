@@ -8,9 +8,11 @@ It will feature a token which will be used as an incentive system for uploading 
 
 As of this moment, there is no set roadmap with specific dates. However this is an open-source, and volunteer based project where anyone is allowed to contribute. Once there is a fully working prototype, I will be crowdfunding this project so that I can hire developers so we can churn out a production ready product. Everyone who was part of the project during the initial (current) development phase, will be offered a paid development position, with pay equivalent to the work done.
 
-# Volunteers Needed For
-
+# Positions which volunteers are needed to fill
+* a solid javascript and nodeJS developer
+* QA testers
 * livepeer code modification (Go developer)
+  > I'm (postables) am teaching myself Go so I will likely fulfill this roll
 * Mobile application that will stream video to a randomly select NodeJS server, and once done recording saves video locally. Must also integrate with ethereum, as users will be identified by eth addresses, and will be given a token to act as an incentive for vdieo recording
 * Website design for both the project website, and html pages people will be using
 * NOTE: I (postables) will be handling all smart contract development
