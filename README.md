@@ -8,13 +8,23 @@ It will feature a token which will be used as an incentive system for uploading 
 
 As of this moment, there is no set roadmap with specific dates. However this is an open-source, and volunteer based project where anyone is allowed to contribute. Once there is a fully working prototype, I will be crowdfunding this project so that I can hire developers so we can churn out a production ready product. Everyone who was part of the project during the initial (current) development phase, will be offered a paid development position, with pay equivalent to the work done.
 
-# Volunteers Needed For
-
-* NodeJS server which will act as a "citadel" server which maintains a local copy of every file uploaded this server. Integrate with Ethereum so that people running Citadel servers will be credited with a token.
-* NodeJS servers that optimally can be browserified so that it can be run off a single HTML page. This server will accept incoming video streams, saving the video to IPFS, and then calling a smart contract to upload the checksum/integrity check to immutable storage
+# Positions which volunteers are needed to fill
+* a solid javascript and nodeJS developer
+* QA testers
+* livepeer code modification (Go developer)
+  > I'm (postables) am teaching myself Go so I will likely fulfill this roll
 * Mobile application that will stream video to a randomly select NodeJS server, and once done recording saves video locally. Must also integrate with ethereum, as users will be identified by eth addresses, and will be given a token to act as an incentive for vdieo recording
 * Website design for both the project website, and html pages people will be using
 * NOTE: I (postables) will be handling all smart contract development
+
+# Donations
+Should you wish to donate to this project and help development please send cryptos to any of the following addresses:
+### NEO: AGE9A4aDkk3BgZ7vmkhCshvg1JW8WT2rrY
+### SIGT: BRSvsHH8jS9K2ECtdVX5MMZfSAU1iasYNk
+### ETH: 0x846fc33b1e82727dc792796cc9ee0a1a086a8630
+### BTC: 15EmsVHRUcxDKd8jdY9DpKLAhvBtKf5SB6
+
+All donation's will be split amongst active-contributor/stakeholders
 
 ## data_receive_contract.sol
 
