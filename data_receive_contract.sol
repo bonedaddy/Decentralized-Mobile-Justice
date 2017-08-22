@@ -1,5 +1,17 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.14;
 
+
+contract StringAsKey {
+    function convert(string key) returns (bytes32 ret) {
+        if (bytes(key).length > 32) {
+            revert();
+        }
+
+        assembly {
+            ret := mload(add(key, 32))
+        }
+    }
+}
 contract Owner {
     
     address public owner;
@@ -45,7 +57,7 @@ contract SafeMath {
 }
 
 
-contract DataReceive is Owner, SafeMath {
+contract DataReceive is Owner, SafeMath, StringAsKey {
 
     
     address public tokenContractAddress;
@@ -71,7 +83,7 @@ contract DataReceive is Owner, SafeMath {
     
     // used to keep track of entries. Each IPFS hash when entered is set to true
     // This is used so that once an ipfsHash has been entered it can't be changed 
-    mapping (string => bool) public ipfsHashEntered;
+    mapping (bytes32 => bool) public ipfsHashEntered;
 
     // used to check if a user has uploaded before
     mapping (address => bool) public hasUploaded;
@@ -104,7 +116,8 @@ contract DataReceive is Owner, SafeMath {
             registerRecorder(_recorder);
         }
         // checks to see that this particular ipfs hash hasn't been uploaded before
-        require(!ipfsHashEntered[_ipfsHash]);
+        
+        require(!ipfsHashEntered[convert(_ipfsHash)]);
         // makes sure the person calling the function isn't the recorder
         require(_recorder != msg.sender);
         bytes32 checksum = sha3(_ipfsHash);
