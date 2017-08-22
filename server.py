@@ -2,6 +2,7 @@ from web3 import Web3, HTTPProvider, IPCProvider
 import web3
 import ipfsapi
 import hashlib
+import ethereum-utils
 
 ipfs = ipfsapi.connect('127.0.0.1', 5001)
 
@@ -12,6 +13,7 @@ w3_contract = web3.contract.Contract('address of contract')
 
 # uploads hash
 w3_contract.transact().addEntry('someaddr', 'somehash', 'somechecksum')
+ethutils = ethereum-utils()
 
 
 class Web3():
