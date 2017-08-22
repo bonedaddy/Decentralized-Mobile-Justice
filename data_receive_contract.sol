@@ -83,7 +83,7 @@ contract DataReceive is Owner, SafeMath, StringAsKey {
     
     // used to keep track of entries. Each IPFS hash when entered is set to true
     // This is used so that once an ipfsHash has been entered it can't be changed 
-    mapping (bytes32 => bool) public ipfsHashEntered;
+    mapping (string => bool) ipfsHashEntered;
 
     // used to check if a user has uploaded before
     mapping (address => bool) public hasUploaded;
@@ -92,7 +92,7 @@ contract DataReceive is Owner, SafeMath, StringAsKey {
     mapping (address => uint256) public creditBalances;
 
     // mapping used to track checksum to ipfshash
-    mapping (string => string) public ipfshashToChecksum;
+    mapping (string => string)  ipfshashToChecksum;
 
     // Event to log data entry
     event DataEntry(address indexed _recorder, string indexed _ipfsHash, bytes32 indexed _ipfsChecksum);
@@ -117,7 +117,7 @@ contract DataReceive is Owner, SafeMath, StringAsKey {
         }
         // checks to see that this particular ipfs hash hasn't been uploaded before
         
-        require(!ipfsHashEntered[convert(_ipfsHash)]);
+        require(!ipfsHashEntered[_ipfsHash]);
         // makes sure the person calling the function isn't the recorder
         require(_recorder != msg.sender);
         bytes32 checksum = sha3(_ipfsHash);
