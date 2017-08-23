@@ -4,6 +4,10 @@ Several years ago there was a project done along with ACLU (around the time of t
 
 It will feature a token which will be used as an incentive system for uploading videos, and for running a not yet constructed **citadel** server which will maintain a local backup of every video uploaded. 
 
+# Project Participants
+* Postables (founder)
+* connormcn37 (co-founder)
+
 # Project Road Map
 
 As of this moment, there is no set roadmap with specific dates. However this is an open-source, and volunteer based project where anyone is allowed to contribute. Once there is a fully working prototype, I will be crowdfunding this project so that I can hire developers so we can churn out a production ready product. Everyone who was part of the project during the initial (current) development phase, will be offered a paid development position, with pay equivalent to the work done.
