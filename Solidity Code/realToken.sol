@@ -1,7 +1,6 @@
-pragma solidity ^0.4.11;
+library SafeMath {
 
-contract SafeMath {
-      function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+  function mul(uint256 a, uint256 b) internal constant returns (uint256) {
     uint256 c = a * b;
     assert(a == 0 || c / a == b);
     return c;
@@ -26,52 +25,136 @@ contract SafeMath {
   }
 }
 
+// Used for function invoke restriction
 contract Owned {
+
     address public owner;
 
-    modifier onlyOwner() {
-        require(msg.sender == owner);
-        _;
-    }
     function Owned() {
         owner = msg.sender;
     }
 
-    // change this so we can have an array of owners
-    function transferOwnership(address _newOwner) onlyOwner returns (bool success) {
-        owner = _newOwner;
+    modifier Owner() {
+        if (msg.sender != owner)
+            revert();
+        _; // function code inserted here
     }
+
+    function transferOwnership(address _newOwner) Owner returns (bool success) {
+        if (msg.sender != owner)
+            revert();
+        owner = _newOwner;
+        return true;
+        
+    }
+
 }
 
-contract DMJ {
 
-    string public name = "Decentralized Mobile Justice";
+contract DMG is Owned {
+
+    using SafeMath for uint256;
+    address public privilegedAddress; // defines a privileged address that can perform different actions
+    string public name = "Decentralized Mobile Jusitce";
     string public symbol = "DMJ";
     uint8 public decimals = 18;
-    uint256 public _totalSupply = 100000000 * 1 wei;
-    bool public transfersFrozen;
+    uint256 public _totalSupply = 1000000000000000000000000000;
+    bool public tokensFrozen;
+
+    // will store balance information
+    mapping (address => uint256) public balances;
+    // will store allowance approval information 
+    mapping (address => mapping (address => uint256)) public allowed;
+    // Used to keep track of individual account seizure
+
 
     event Transfer(address indexed _from, address indexed _to, uint256 _amount);
-    event Freeze(bool indexed Froozen);
-    event Thaw(bool indexed Thawed);
+    event Approval(address indexed _owner, address indexed _spender, uint256 _amount);
+    event TokenFreeze(bool indexed Frozen); // network wide token freeze
 
-    mapping (address => uint256) public balances;
-    
-    function DMJ() {
-        balances[msg.sender] = _totalSupply;
+
+    function  DMG() {
+        tokensFrozen = false;
+        balances[owner] = _totalSupply;
     }
 
-    function freezeTransfers() returns (bool Frozen) {
-        transfersFrozen = true;
-        Freeze(true);
+
+    function unfreezeTokens() Owner {
+        tokensFrozen = false;
+    }
+
+    function freezeTokens() Owner {
+        tokensFrozen = true;
+    }
+
+
+
+//////////////////////////////
+//ERC20 start Token Functions/
+/////////////////////////////
+
+    function transfer(address _to, uint256 _amount) public returns (bool success) {
+        if(msg.sender != owner && tokensFrozen)  
+            return false;
+        if(_amount <= 0)
+            return false;
+        if(balances[msg.sender] < _amount)
+            return false;
+        if(balances[_to] + _amount < balances[_to]) // overflow check
+            return false;
+        balances[msg.sender] = balances[msg.sender].sub(_amount);
+        balances[_to] = balances[_to].add(_amount);
+        Transfer(msg.sender, _to, _amount);
         return true;
     }
 
-    function thawTransfers() returns (bool Thawed) {
-        transfersFrozen = false;
-        Thaw(true);
+
+   
+    function transferFrom(address _from, address _to, uint256 _amount) public returns (bool success) {
+        if(tokensFrozen && msg.sender != owner)
+            return false;
+        if(balances[_from] < _amount)
+            return false;
+        if(balances[_from] - _amount < 0)
+            return false;
+        if(balances[_to] + _amount < balances[_to])
+            return false;
+        if(balances[_to] + _amount <= 0)
+            return false;
+        if(_amount > allowed[_from][msg.sender])
+            return false;
+        balances[_from] = balances[_from].sub(_amount);
+        balances[_to] = balances[_to].add(_amount);
+        allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_amount);
+        Transfer(_from, _to, _amount); // Notifies blockchain
         return true;
     }
 
 
+    function approve(address _spender, uint256 _amount) public returns (bool success) {
+        allowed[msg.sender][_spender] = _amount;
+        Approval(msg.sender, _spender, _amount); // Notifies blockchain
+        return true;
+    }
+
+    function allowance(address _owner, address _spender) constant returns (uint256 _amount) {
+        return allowed[_owner][_spender];
+    }
+
+    function balanceOf(address _person) constant returns (uint256 _amount) {
+        return balances[_person];
+    }
+
+    function totalSupply() constant returns (uint256 totalSupply) {
+        return _totalSupply;
+    }
+
+//////////////////////////////
+//ERC20 End  Token  Functions/
+/////////////////////////////
+
+    // fallback function
+    function() payable {
+        revert();
+    }
 }
