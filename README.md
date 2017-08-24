@@ -35,4 +35,5 @@ Should you wish to donate to this project and help development please send crypt
 ### SIGT: BRSvsHH8jS9K2ECtdVX5MMZfSAU1iasYNk
 ### BTC: 15EmsVHRUcxDKd8jdY9DpKLAhvBtKf5SB6
 ### Bitcoin Cash: 1EpCh1n9SJG5nFuPLbgRwgcFq69svmhs7p
+### Ethereum: 0xbe42d23cb8a955a5e25acf78ad4bf1136c974104
 ### LTC: Lfa2TJip9bNr1vZ8LisyS9seBXHvUp7mkv
