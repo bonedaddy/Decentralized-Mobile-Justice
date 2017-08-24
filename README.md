@@ -1,4 +1,4 @@
-# decentralized-police-enforcement 
+# Decentralized Mobile Justice 
 
 This project is still in development (including the readme file) so only very basic security checks.  A proffesional contract auditor will be seeked out at the appropriate time
 
