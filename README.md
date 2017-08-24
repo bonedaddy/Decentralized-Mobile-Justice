@@ -33,7 +33,6 @@ Donations are split 50/50 with 50% being converted to FIAT and donated to Amnest
 Should you wish to donate to this project and help development please send cryptos to any of the following addresses:
 ### NEO: AGE9A4aDkk3BgZ7vmkhCshvg1JW8WT2rrY
 ### SIGT: BRSvsHH8jS9K2ECtdVX5MMZfSAU1iasYNk
-### ETH: 0x846fc33b1e82727dc792796cc9ee0a1a086a8630
 ### BTC: 15EmsVHRUcxDKd8jdY9DpKLAhvBtKf5SB6
 ### Bitcoin Cash: 1EpCh1n9SJG5nFuPLbgRwgcFq69svmhs7p
 ### LTC: Lfa2TJip9bNr1vZ8LisyS9seBXHvUp7mkv
