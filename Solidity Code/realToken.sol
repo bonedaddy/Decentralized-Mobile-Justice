@@ -67,5 +67,11 @@ contract DMJ {
         return true;
     }
 
+    function thawTransfers() returns (bool Thawed) {
+        transfersFrozen = false;
+        Thaw(true);
+        return true;
+    }
+
 
 }
