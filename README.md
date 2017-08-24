@@ -1,4 +1,6 @@
-# decentralized-police-enforcement
+# decentralized-police-enforcement 
+
+This project is still in development (including the readme file) so only very basic security checks.  A proffesional contract auditor will be seeked out at the appropriate time
 
 Several years ago there was a project done along with ACLU (around the time of the Eric Gardner police brutality case) to build a system where users could stream footage a police incident, and store it locally on their phone, but also stream it to remote servers in case the phone was compromised and video evidence deleted. This was a great project but it suffered from one problem: centralization. For whatever reason it appears the project is now defunct, so in essence this is a reboot of that project, but instead of storing the data on central servers, it will be stores usaing a distributed, and decentralized filesystem protocol called IPFS (this may change in the future) to store the data. This data will then be checksumed, and the checksum will be uploaded to the ethereum blockchain in an immutable storage container of a smart contract this way when viewing the video you can run a checksum, and compare the hash with a known good, and non-changeable hash which will help verify video authenticity (this verification system will likely change and become more advanced as time goes on)
 
