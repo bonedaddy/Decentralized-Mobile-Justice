@@ -68,7 +68,7 @@ contract Rewards is SafeMath, Owner {
         InitRewards(true);
     }
 
-    }
+
     function calcRewardStreamer(address _recorder) returns (bool success) {
         return true;
     }
