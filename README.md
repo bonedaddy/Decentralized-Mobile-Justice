@@ -15,6 +15,7 @@ There is also the possibility to help use mhe platform to raise awarenes of huma
 
 # Positions which volunteers are needed to fill
 
+( Someone to assist me (postables) with python development
 * QA testers
 * Go programmer
 * Mobile Application Developer
