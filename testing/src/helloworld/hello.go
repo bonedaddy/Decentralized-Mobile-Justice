@@ -8,5 +8,6 @@ import (
 
 func main() {
 	fmt.Println("hello")
+	a, b, c := true, false, false
 }
 echo 
