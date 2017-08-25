@@ -42,16 +42,16 @@ def storeToIpfsAndSaveChecksum(ipfsHashID):
 
 # add a check to ensure the user provided enough params:
 if len(sys.argv) == 6:
-    pass
+    print('You have provided the correct number of arguments')
 elif len(sys.argv) > 6 or len(sys.argv) < 6:
     print('Incorrect invocation\nUsage: python3 server.py <tokenContractAddr> <ipfsnodeip> <ipfsnodeport> <localparityip> <localparityport>')
     exit()
 
 
 
-ipfsctl = Ipfs(sus.argv[2], sys.argv[3])
+ipfsctl = Ipfs(sys.argv[2], sys.argv[3])
 
-web3ctl = Web3()
+web3ctl = WWeb3()
 # first we instantiate the IPFS class with the ip and port of our ipfs node
 # the node information w ill be hardcoded
 
@@ -60,7 +60,7 @@ web3ctl = Web3()
 # python3 server.py tokenContractaddress ipfsNodeIp ipfsNodePort localparityip localparityport
 
 
-filename = input('specify the file to upload to ipfs: ')
+ipfsctl.uploadFile('test.txt')
 
 # Now lets upload the file to IPFS, returning the hash identifier
 hash = ipfsctl.uploadFile(filename)
