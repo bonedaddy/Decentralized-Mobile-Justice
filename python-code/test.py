@@ -3,6 +3,7 @@ import web3
 import ipfsapi
 import hashlib
 import ethereum-utils
+import sys
 
 ipfs = ipfsapi.connect('127.0.0.1', 5001)
 
@@ -64,4 +65,5 @@ def storeToIpfsAndSaveChecksum():
 
 # first we instantiate the IPFS class with the ip and port of our ipfs node
 
-web3ctl, ipfsctl = init()
+
+web3ctl, ipfsctl = init(sys.argv[1], sys.argv[2], sys.argv[3])
