@@ -63,3 +63,8 @@ elif len(sys.argv) > 6 or len(sys.argv) < 6:
 
 # python3 server.py tokenContractaddress ipfsNodeIp ipfsNodePort localparityip localparityport
 web3ctl, ipfsctl = init(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+print("Welcome to the DMJs python control server interface [BETA]\nPlease utilize the following menu system")
+
+menu_dict = {'[1] Upload file to IPFS' : ['yes', 'no'], }
+while True;
+    for enum
