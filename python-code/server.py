@@ -6,8 +6,9 @@ import sys
 
 class WWeb3():
 
-    def __init__(self,tokenContractAddress, localparityip, localparityport):
-        self.w3 = Web3(HTTPProvider('http://%:%' % (localparityip, localparityport)))
+    def __init__(self):
+        self.w3 = Web3(HTTPProvider('http://localhost:8545'))
+
         self.w3_contract = web3.eth.Contract(tokenContractaddress) 
         # create hashlib handler for sha256
         self.hasher = hashlib.blake2b()
@@ -33,9 +34,6 @@ class Ipfs():
         ipfshash = self.ipfs_api.cat(response['Hash']).strip('\n')
         return ipfshash
 
-
-
-
 def storeToIpfsAndSaveChecksum(ipfsHashID):
     ipfshash = ipfss.uploadFile(ipfsHashID)
     webb3.addChecksum(recorder, ipfshash)
@@ -52,25 +50,15 @@ elif len(sys.argv) > 6 or len(sys.argv) < 6:
 
 
 ipfsctl = Ipfs(sus.argv[2], sys.argv[3])
+
+web3ctl = Web3()
 # first we instantiate the IPFS class with the ip and port of our ipfs node
 # the node information w ill be hardcoded
 
 # program will need the user to specify the ipfs port and ip, as well as parity node and ip in the following format:
 
 # python3 server.py tokenContractaddress ipfsNodeIp ipfsNodePort localparityip localparityport
-web3ctl, ipfsctl = init(tokenContractAddress=sys.argv[1], ipfsNodeIp=sys.argv[2], ipfsNodePort=sys.argv[3], localparityip=sys.argv[4], localparityport=sys.argv[5])
-print("Welcome to the DMJs python control server interface [BETA]\nPlease utilize the following menu system")
 
-menu_dict = {'[1] Upload file to IPFS' : ['yes', 'no'],  '[2] Upload file to IPFS, and send integrity data to the blockchain' : ['yes', 'no']}
-
-"""
-while True;
-    options = []
-    for key in menu_dict.keys():
-        print('%s - %s %s' % (key, menu_dict[key][0], menu_dict[key][1])
-    option = int(input('Please enter the number of the corresponding option'))
-    swxiaion = input("Please type yes, or no to make your decision")
-"""
 
 filename = input('specify the file to upload to ipfs: ')
 
