@@ -1,3 +1,5 @@
+# This project has changed repositories, to be hosted on Bitbucket so always go there for your information. Periodically I'll sync up this repo with the one from Bitbucket https://bitbucket.org/dankmatter/decentralized-mobile-justice/overview
+
 # Decentralized Mobile Justice 
 
 This project is still in development (including the readme file) so only very basic security checks.  A proffesional contract auditor will be seeked out at the appropriate time
