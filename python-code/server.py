@@ -1,7 +1,7 @@
 from web3 import Web3, HTTPProvider, IPCProvider
 import web3
 import ipfsapi
-import hashlib
+# import hashlib
 import sys
 
 class WWeb3():
@@ -11,15 +11,15 @@ class WWeb3():
 
         self.w3_contract = web3.eth.Contract(tokenContractaddress) 
         # create hashlib handler for sha256
-        self.hasher = hashlib.blake2b()
+        #self.hasher = hashlib.blake2b()
         # to use this we would do something like so:
         # self.hasher.update(b'ipfs hash')
         # to return: self.hasher.hexdigest()
 
-    
+# note that for testing purposes, we are dpomg hasin oon chain
 
     def addChecksum(self,recorder, ipfshash):
-        checksum = self.hasher.update(b'%s' % ipfshash)
+         #checksum = self.hasher.update(b'%s' % ipfshash)
         self.w3_contract.transact().addEntry(str(recorder), str(ipfshash), str(checksum))
 
 
@@ -34,12 +34,15 @@ class Ipfs():
         ipfshash = self.ipfs_api.cat(response['Hash']).strip('\n')
         return ipfshash
 
+
+# changing to to be an importable class
+"""
 def storeToIpfsAndSaveChecksum(ipfsHashID):
     ipfshash = ipfss.uploadFile(ipfsHashID)
     webb3.addChecksum(recorder, ipfshash)
+"""
 
-
-
+"""
 # add a check to ensure the user provided enough params:
 if len(sys.argv) == 6:
     print('You have provided the correct number of arguments')
@@ -68,4 +71,4 @@ print("Here is the ipfs identifier for your file:: %s hash")
 #continueYN = input('Do you wish to continue and upload a checksum to ethereum, or do you want to exit now? please say yes or no")
 
 #if continueYN == 'yes':
-
+"""
