@@ -8,6 +8,11 @@ Several years ago there was a project done along with ACLU (around the time of t
 
 It will feature a token based incentive system for contributing to the network, whether it be recording incidences, or running oine of the servers that receives a video stream. 
 
+# ERC20 Token and Incentive For Using The DMJ Network
+
+In order to reward users and provided an incentive to use the network. An ERC20 or ERC23 token will be generated to serve this purpose. Rewards will be dstributed to people recording videos, people who curate videos, people running the livepeer nodes to receive video, and people running the storage nodes to provide secure, redundant data storage and  integrity verification.
+
+Right now I'm unsure how token distribution is going to be handled and whether or not I will do an ICO. However any form of token distribution involving transaction of cryptocurrencies such as ETH or BTC, will result in 50% of the proceeds being donated to ACLU, and 50% being distrubted fairly among project participants.
 
 # Project Road Map
 
@@ -17,7 +22,8 @@ There is also the possibility to help use mhe platform to raise awarenes of huma
 
 # Positions which volunteers are needed to fill
 
-( Someone to assist me (postables) with python development
+* IPFS Developers
+* Ethereum Developers
 * QA testers
 * Go programmer
 * Mobile Application Developer
@@ -40,3 +46,4 @@ Should you wish to donate to this project and help development please send crypt
 ### Bitcoin Cash: 1EpCh1n9SJG5nFuPLbgRwgcFq69svmhs7p
 ### Ethereum: 0xbe42d23cb8a955a5e25acf78ad4bf1136c974104
 ### LTC: Lfa2TJip9bNr1vZ8LisyS9seBXHvUp7mkv
+
