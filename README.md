@@ -39,11 +39,6 @@ Note that for the moment, any of the smart contract development is being limited
 If you wish to donate, you can do so anonymously, or let me know your name and you'll be listed on this README.md as a contributor.
 Donations are split 50/50 with 50% being converted to FIAT and donated to Amnesty International, and the other 50% being distributed amongstn team members and to help fund development
 
-Should you wish to donate to this project and help development please send cryptos to any of the following addresses:
-### NEO: AGE9A4aDkk3BgZ7vmkhCshvg1JW8WT2rrY
-### SIGT: BRSvsHH8jS9K2ECtdVX5MMZfSAU1iasYNk
-### BTC: 15EmsVHRUcxDKd8jdY9DpKLAhvBtKf5SB6
-### Bitcoin Cash: 1EpCh1n9SJG5nFuPLbgRwgcFq69svmhs7p
-### Ethereum: 0xbe42d23cb8a955a5e25acf78ad4bf1136c974104
-### LTC: Lfa2TJip9bNr1vZ8LisyS9seBXHvUp7mkv
+Should you wish to donate send ETH or any ERC20 tokens to the following address:
+0x00e2EFA637A08fA51571D41E07DeEfF99B7C806c
 
